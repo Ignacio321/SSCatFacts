@@ -74,3 +74,5 @@ gem 'factory_bot_rails', '~> 6.5', groups: %i[development test]
 gem 'faker', '~> 3.8', groups: %i[development test]
 gem 'rspec-rails', '~> 8.0', groups: %i[development test]
 gem 'shoulda-matchers', '~> 8.0', groups: %i[development test]
+
+gem 'bcrypt', '~> 3.1'
