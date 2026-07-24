@@ -9,3 +9,9 @@ lint-fix:
 
 dev:
 	bin/dev
+
+test:
+	bundle exec rspec
+	npm test
+
+check: lint test
