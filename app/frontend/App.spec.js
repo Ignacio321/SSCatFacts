@@ -1,16 +1,11 @@
 import { describe, it, expect } from 'vitest'
 import { mount } from '@vue/test-utils'
 import App from './App.vue'
+import RegisterForm from './components/RegisterForm.vue'
 
 describe('App', () => {
-  it('renders the heading', () => {
+  it('renders Register Form', () => {
     const wrapper = mount(App)
-    expect(wrapper.find('h1').exists()).toBe(true)
-  })
-
-  it('increments the counter on click', async () => {
-    const wrapper = mount(App)
-    await wrapper.find('button').trigger('click')
-    expect(wrapper.text()).toContain('1')
+    expect(wrapper.findComponent(RegisterForm).exists()).toBe(true)
   })
 })
