@@ -69,3 +69,8 @@ gem 'vite_rails', '~> 3.11'
 gem 'rubocop', '~> 1.88', groups: %i[development test]
 gem 'rubocop-performance', '~> 1.26', groups: %i[development test]
 gem 'rubocop-rails', '~> 2.36', groups: %i[development test]
+
+gem 'factory_bot_rails', '~> 6.5', groups: %i[development test]
+gem 'faker', '~> 3.8', groups: %i[development test]
+gem 'rspec-rails', '~> 8.0', groups: %i[development test]
+gem 'shoulda-matchers', '~> 8.0', groups: %i[development test]
