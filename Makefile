@@ -15,3 +15,6 @@ test:
 	npm test
 
 check: lint test
+
+db-migrate:
+	bin/rails db:migrate
