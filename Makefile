@@ -11,7 +11,7 @@ dev:
 	bin/dev
 
 test:
-	bundle exec rspec
+	bundle exec rspec --format documentation
 	npm test
 
 check: lint test
