@@ -25,7 +25,7 @@ describe('LoginForm', () => {
     expect(auth.login).toHaveBeenCalledWith('ignacio', '12345678')
   })
 
-  it('shows an error when login fails', async () => {
+  it('shows an error when the credentials are wrong', async () => {
     const { wrapper, auth } = mountForm()
     auth.login.mockRejectedValueOnce({ status: 401 })
 
@@ -33,5 +33,28 @@ describe('LoginForm', () => {
     await flushPromises()
 
     expect(wrapper.text()).toContain('incorrectos')
+  })
+
+  it('shows a rate limit message when throttled', async () => {
+    const { wrapper, auth } = mountForm()
+    auth.login.mockRejectedValueOnce({
+      status: 429,
+      error: 'Too many login attempts. Please try again later.',
+    })
+
+    await wrapper.find('button').trigger('click')
+    await flushPromises()
+
+    expect(wrapper.text()).toContain('Too many login attempts')
+  })
+
+  it('shows a connection error when the request fails outright', async () => {
+    const { wrapper, auth } = mountForm()
+    auth.login.mockRejectedValueOnce(new TypeError('Failed to fetch'))
+
+    await wrapper.find('button').trigger('click')
+    await flushPromises()
+
+    expect(wrapper.text()).toContain('No pudimos conectar')
   })
 })

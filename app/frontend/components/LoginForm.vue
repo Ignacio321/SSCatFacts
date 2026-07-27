@@ -11,8 +11,16 @@ async function submit() {
   error.value = null
   try {
     await auth.login(username.value, password.value)
-  } catch {
-    error.value = 'Usuario o contraseña incorrectos'
+  } catch (err) {
+    if (err.status === 429) {
+      error.value =
+        err.error ||
+        'Demasiados intentos. Espera un momento e intenta de nuevo.'
+    } else if (err.status === 401) {
+      error.value = 'Usuario o contraseña incorrectos'
+    } else {
+      error.value = 'No pudimos conectar con el servidor'
+    }
   }
 }
 </script>
