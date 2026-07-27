@@ -76,3 +76,7 @@ gem 'rspec-rails', '~> 8.0', groups: %i[development test]
 gem 'shoulda-matchers', '~> 8.0', groups: %i[development test]
 
 gem 'bcrypt', '~> 3.1'
+
+gem 'faraday', '~> 2.14'
+
+gem 'webmock', '~> 3.26', group: :test

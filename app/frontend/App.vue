@@ -3,6 +3,7 @@ import { ref, onMounted } from 'vue'
 import { useAuthStore } from './stores/auth'
 import LoginForm from './components/LoginForm.vue'
 import RegisterForm from './components/RegisterForm.vue'
+import FactsList from './components/FactsList.vue'
 
 const auth = useAuthStore()
 const showRegister = ref(false)
@@ -38,6 +39,7 @@ onMounted(() => auth.fetchCurrentUser())
           Salir
         </button>
       </div>
+      <FactsList />
     </template>
   </div>
 </template>
