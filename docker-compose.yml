@@ -1,0 +1,30 @@
+services:
+  db:
+    image: postgres:16
+    environment:
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-postgres}
+    volumes:
+      - pg_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+
+  web:
+    build: .
+    depends_on:
+      db:
+        condition: service_healthy
+    environment:
+      RAILS_ENV: production
+      SECRET_KEY_BASE: ${SECRET_KEY_BASE:-insecure-local-only-secret-key-base-change-me}
+      DATABASE_URL: postgres://postgres:${POSTGRES_PASSWORD:-postgres}@db:5432/ss_cat_facts_production
+      CACHE_DATABASE_URL: postgres://postgres:${POSTGRES_PASSWORD:-postgres}@db:5432/ss_cat_facts_production_cache
+      QUEUE_DATABASE_URL: postgres://postgres:${POSTGRES_PASSWORD:-postgres}@db:5432/ss_cat_facts_production_queue
+      CABLE_DATABASE_URL: postgres://postgres:${POSTGRES_PASSWORD:-postgres}@db:5432/ss_cat_facts_production_cable
+    ports:
+      - "3000:80"
+
+volumes:
+  pg_data:
