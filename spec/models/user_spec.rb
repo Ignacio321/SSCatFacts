@@ -9,4 +9,6 @@ RSpec.describe User, type: :model do
   it { is_expected.to validate_uniqueness_of(:username).case_insensitive }
   it { is_expected.to validate_length_of(:password).is_at_least(8) }
   it { is_expected.to have_secure_password }
+  it { is_expected.to have_many(:likes) }
+  it { is_expected.to have_many(:liked_facts).through(:likes) }
 end
