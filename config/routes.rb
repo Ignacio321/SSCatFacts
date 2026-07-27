@@ -11,6 +11,7 @@ Rails.application.routes.draw do
       resources :cat_facts, only: [:index]
       resources :likes, only: %i[create destroy]
       resources :liked_facts, only: [:index]
+      resources :popular_facts, only: [:index]
     end
   end
 end
