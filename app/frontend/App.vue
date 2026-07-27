@@ -5,10 +5,17 @@ import LoginForm from './components/LoginForm.vue'
 import RegisterForm from './components/RegisterForm.vue'
 import FactsList from './components/FactsList.vue'
 import FavoriteFacts from './components/FavoriteFacts.vue'
+import PopularFacts from './components/PopularFacts.vue'
 
 const auth = useAuthStore()
 const showRegister = ref(false)
-const showFavorites = ref(false)
+const view = ref('facts')
+
+const tabs = [
+  { key: 'facts', label: 'Cat Facts' },
+  { key: 'favorites', label: 'Mis favoritos' },
+  { key: 'popular', label: 'Más populares' },
+]
 
 onMounted(() => auth.fetchCurrentUser())
 </script>
@@ -39,11 +46,16 @@ onMounted(() => auth.fetchCurrentUser())
         >
         <div class="flex items-center gap-4">
           <button
-            data-testid="toggle-favorites"
-            class="text-sm text-blue-600 underline"
-            @click="showFavorites = !showFavorites"
+            v-for="tab in tabs"
+            :key="tab.key"
+            :data-testid="`tab-${tab.key}`"
+            class="text-sm underline"
+            :class="
+              view === tab.key ? 'text-blue-800 font-semibold' : 'text-blue-600'
+            "
+            @click="view = tab.key"
           >
-            {{ showFavorites ? 'Ver cat facts' : 'Mis favoritos' }}
+            {{ tab.label }}
           </button>
           <button
             class="text-sm text-blue-600 underline"
@@ -53,7 +65,8 @@ onMounted(() => auth.fetchCurrentUser())
           </button>
         </div>
       </div>
-      <FavoriteFacts v-if="showFavorites" />
+      <FavoriteFacts v-if="view === 'favorites'" />
+      <PopularFacts v-else-if="view === 'popular'" />
       <FactsList v-else />
     </template>
   </div>
