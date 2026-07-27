@@ -4,9 +4,11 @@ import { useAuthStore } from './stores/auth'
 import LoginForm from './components/LoginForm.vue'
 import RegisterForm from './components/RegisterForm.vue'
 import FactsList from './components/FactsList.vue'
+import FavoriteFacts from './components/FavoriteFacts.vue'
 
 const auth = useAuthStore()
 const showRegister = ref(false)
+const showFavorites = ref(false)
 
 onMounted(() => auth.fetchCurrentUser())
 </script>
@@ -35,11 +37,24 @@ onMounted(() => auth.fetchCurrentUser())
         <span
           >Hola, <strong>{{ auth.user.username }}</strong> 🐱</span
         >
-        <button class="text-sm text-blue-600 underline" @click="auth.logout()">
-          Salir
-        </button>
+        <div class="flex items-center gap-4">
+          <button
+            data-testid="toggle-favorites"
+            class="text-sm text-blue-600 underline"
+            @click="showFavorites = !showFavorites"
+          >
+            {{ showFavorites ? 'Ver cat facts' : 'Mis favoritos' }}
+          </button>
+          <button
+            class="text-sm text-blue-600 underline"
+            @click="auth.logout()"
+          >
+            Salir
+          </button>
+        </div>
       </div>
-      <FactsList />
+      <FavoriteFacts v-if="showFavorites" />
+      <FactsList v-else />
     </template>
   </div>
 </template>
