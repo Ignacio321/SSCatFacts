@@ -80,3 +80,5 @@ gem 'bcrypt', '~> 3.1'
 gem 'faraday', '~> 2.14'
 
 gem 'webmock', '~> 3.26', group: :test
+
+gem 'rack-attack', '~> 6.7'
