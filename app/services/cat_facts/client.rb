@@ -10,12 +10,12 @@ module CatFacts
       @connection = connection
     end
 
-    # Returns an array of { text:, length: } hashes
-    def fetch_facts(limit: 10)
-      response = @connection.get('/facts', limit: limit)
+    # Returns { facts: [{ text:, length: }], current_page:, last_page: }
+    def fetch_facts(limit: 10, page: 1)
+      response = @connection.get('/facts', limit: limit, page: page)
       raise Error, "Unexpected status #{response.status}" unless response.success?
 
-      parse_facts(response.body)
+      parse_response(response.body)
     rescue Faraday::Error => e
       raise Error, "Cat facts API unavailable: #{e.message}"
     end
@@ -30,9 +30,9 @@ module CatFacts
       end
     end
 
-    def parse_facts(body)
-      facts = body.fetch('data', [])
-      facts.map { |fact| { text: fact['fact'], length: fact['length'] } }
+    def parse_response(body)
+      facts = body.fetch('data', []).map { |fact| { text: fact['fact'], length: fact['length'] } }
+      { facts: facts, current_page: body['current_page'], last_page: body['last_page'] }
     end
   end
 end
