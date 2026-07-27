@@ -9,6 +9,8 @@ Rails.application.routes.draw do
       resource :session, only: %i[create destroy]
       get 'me', to: 'sessions#show'
       resources :cat_facts, only: [:index]
+      resources :likes, only: %i[create destroy]
+      resources :liked_facts, only: [:index]
     end
   end
 end
