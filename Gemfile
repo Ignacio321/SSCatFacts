@@ -66,7 +66,7 @@ end
 
 gem 'vite_rails', '~> 3.11'
 
-gem 'rubocop', '~> 1.88', groups: %i[development test]
+gem 'rubocop', '~> 1.89', groups: %i[development test]
 gem 'rubocop-performance', '~> 1.26', groups: %i[development test]
 gem 'rubocop-rails', '~> 2.36', groups: %i[development test]
 
